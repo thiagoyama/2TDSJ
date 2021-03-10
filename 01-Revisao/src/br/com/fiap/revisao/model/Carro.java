@@ -1,5 +1,6 @@
 package br.com.fiap.revisao.model;
 
+
 public class Carro extends Veiculo {
 
 	//Construtor é herdado? -> NÃO!

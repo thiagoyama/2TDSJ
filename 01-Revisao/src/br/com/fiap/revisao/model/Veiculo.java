@@ -21,6 +21,8 @@ public class Veiculo {
 	
 	private boolean alienado;
 	
+	private Estado estado;  //CTRL + 1 
+	
 	//Construtores
 	public Veiculo(String marca, int ano, boolean alienado) {
 		this.marca = marca;
@@ -73,6 +75,14 @@ public class Veiculo {
 
 	public void setAlienado(boolean alienado) {
 		this.alienado = alienado;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 	
 }
