@@ -8,7 +8,8 @@ import br.com.fiap.bean.TipoConta;
 import br.com.fiap.exception.SaldoInsuficienteException;
 
 public class Exercicio06 {
-
+	
+	@SuppressWarnings("all")
 	public static void main(String[] args) {
 		//Instanciar uma conta corrente
 		ContaCorrente cc = new ContaCorrente(

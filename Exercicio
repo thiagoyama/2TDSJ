@@ -1,0 +1,15 @@
+No mesmo projeto:
+
+Mapear a tabela:
+
+Sequence SQ_TB_PRODUTO (código)
+
+TB_PRODUTO
+*cd_produto (PK) NUMBER
+*nm_produto	 VARCHAR(50)
+*ds_produto	 VARCHAR(255)
+*vl_produto	 NUMBER
+dt_entrada	 DATE
+dt_fabricacao	 DATE
+fl_foto		 BLOB
+ds_estado	 VARCHAR -> Enum no Java (Novo, Usado)

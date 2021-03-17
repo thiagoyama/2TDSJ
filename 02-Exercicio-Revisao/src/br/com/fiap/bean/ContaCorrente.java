@@ -1,5 +1,6 @@
 package br.com.fiap.bean;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 import br.com.fiap.exception.SaldoInsuficienteException;
