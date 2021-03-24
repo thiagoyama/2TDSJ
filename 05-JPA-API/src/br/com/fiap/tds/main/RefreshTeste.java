@@ -3,30 +3,39 @@ package br.com.fiap.tds.main;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 import br.com.fiap.tds.entity.Aluno;
+import br.com.fiap.tds.entity.Periodo;
 
-public class PesquisaTeste {
+public class RefreshTeste {
 
+	//Atualiza os dados do banco no objeto
 	public static void main(String[] args) {
-		//Obter uma fabrica e um entity manager
+		//Obter a fabrica e o entity manager
 		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("oracle");
 		EntityManager em = fabrica.createEntityManager();
-
-		//Pesquisar um aluno pela PK (codigo)
+		
+		//Pesquisar um aluno de código 1
 		Aluno aluno = em.find(Aluno.class, 1);
 		
-		//Exibir os dados do aluno
+		//Exibir os dados
 		System.out.println(aluno);
 		
-		aluno.setNome("Joao");
-		aluno.setTurma("2TDSR");
+		//Alterar os valores nome e período no objeto
+		aluno.setNome("Gustavo");
+		aluno.setPeriodo(Periodo.TARDE);
 		
-		em.getTransaction().begin();
-		em.getTransaction().commit();
+		//Exibir os dados
+		System.out.println(aluno);
+		
+		//Refresh
+		em.refresh(aluno);
+		
+		//Exibir os dados
+		System.out.println(aluno);
 		
 		//Fechar
 		em.close();
 		fabrica.close();
 	}
-	
 }

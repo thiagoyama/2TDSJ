@@ -60,8 +60,19 @@ public class Aluno {
 		this.periodo = periodo;
 		this.ativo = ativo;
 	}
+	
+	public Aluno(int codigo, String nome, String turma, Calendar dataNascimento, Periodo periodo, boolean ativo) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.turma = turma;
+		this.dataNascimento = dataNascimento;
+		this.periodo = periodo;
+		this.ativo = ativo;
+	}
 
 	//CTRL + 3 -> gcuf
+	
 	@Override
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");

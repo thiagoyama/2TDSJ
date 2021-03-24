@@ -1,25 +1,28 @@
 package br.com.fiap.tds.main;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import br.com.fiap.tds.entity.Aluno;
+import br.com.fiap.tds.entity.Periodo;
 
-public class PesquisaTeste {
+public class AtualizacaoTeste {
 
 	public static void main(String[] args) {
 		//Obter uma fabrica e um entity manager
 		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("oracle");
 		EntityManager em = fabrica.createEntityManager();
-
-		//Pesquisar um aluno pela PK (codigo)
-		Aluno aluno = em.find(Aluno.class, 1);
 		
-		//Exibir os dados do aluno
-		System.out.println(aluno);
+		//Instanciar um Aluno com código que existe no banco (Estado: detached)
+		Aluno aluno = new Aluno(1, "Pedro", "2TDSA", 
+				new GregorianCalendar(2000, Calendar.DECEMBER, 10),
+				Periodo.NOITE, false);
 		
-		aluno.setNome("Joao");
-		aluno.setTurma("2TDSR");
+		Aluno alunoGerenciado = em.merge(aluno);
+		
+		//alunoGerenciado.setAtivo(true);
 		
 		em.getTransaction().begin();
 		em.getTransaction().commit();
