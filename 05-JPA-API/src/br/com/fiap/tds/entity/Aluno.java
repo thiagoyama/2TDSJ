@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -72,6 +73,12 @@ public class Aluno {
 	}
 
 	//CTRL + 3 -> gcuf
+	
+	//Método que é executado automáticamente após um cadastro
+	@PostPersist
+	public void executar() {
+		System.out.println("Após o cadastro...");
+	}
 	
 	@Override
 	public String toString() {
