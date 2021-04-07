@@ -33,7 +33,7 @@ public abstract class GenericDaoImpl<E,K> implements GenericDao<E, K> {
 	}
 
 	@Override
-	public void udpate(E entidade) {
+	public void update(E entidade) {
 		em.merge(entidade);
 	}
 

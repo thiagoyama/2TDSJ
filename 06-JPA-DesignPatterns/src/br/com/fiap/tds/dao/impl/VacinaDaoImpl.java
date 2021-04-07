@@ -1,6 +1,7 @@
 package br.com.fiap.tds.dao.impl;
 
 import javax.persistence.EntityManager;
+
 import br.com.fiap.tds.dao.VacinaDao;
 import br.com.fiap.tds.entity.Vacina;
 

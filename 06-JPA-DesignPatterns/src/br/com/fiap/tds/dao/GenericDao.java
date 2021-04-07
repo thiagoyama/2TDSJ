@@ -11,7 +11,7 @@ public interface GenericDao<E, K> {
 	
 	E findById(K id) throws EntityNotFoundException;
 	
-	void udpate(E entidade);
+	void update(E entidade);
 	
 	void delete(K id) throws EntityNotFoundException;
 	
