@@ -2,8 +2,10 @@ package br.com.fiap.tds.entity;
 
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,8 +37,8 @@ public class Projeto {
 	private Calendar dataEntrega;
 	
 	//Mapear o relacionamento one-to-one bidirecional
-	@OneToOne(mappedBy = "projeto")
-	private GrupoChallenge grupo;
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "projeto", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Grupo grupo;
 	
 	public Projeto() {}
 
@@ -87,11 +89,11 @@ public class Projeto {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public GrupoChallenge getGrupo() {
+	public Grupo getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(GrupoChallenge grupo) {
+	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
 	

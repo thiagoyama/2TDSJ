@@ -1,10 +1,13 @@
 package br.com.fiap.tds.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,6 +32,9 @@ public class NanoCourse {
 	
 	@Column(name="ds_nano_course")
 	private String descricao;
+	
+	@ManyToMany(mappedBy = "cursos")
+	private List<Aluno> alunos;
 	
 	public NanoCourse() {}
 
@@ -85,6 +91,14 @@ public class NanoCourse {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
 	}
 	
 }
