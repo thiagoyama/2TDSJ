@@ -26,7 +26,7 @@ public class Grupo {
 	@GeneratedValue(generator = "grupo", strategy = GenerationType.SEQUENCE)
 	private int codigo;
 	
-	//@Column(name="nm_grupo", length = 50, nullable = false )
+	@Column(name="nm_grupo", length = 50, nullable = false )
 	private String nome;
 	
 	//Mapear o relacionamento um-para-um
@@ -35,7 +35,7 @@ public class Grupo {
 	private Projeto projeto;
 	
 	//Mapear o relacionamento um-para-muitos bidirecional
-	@OneToMany(mappedBy = "grupo", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "grupo", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Aluno> alunos;
 	
 	//Método para adicionar aluno -> utilizar somente no OneToMany
