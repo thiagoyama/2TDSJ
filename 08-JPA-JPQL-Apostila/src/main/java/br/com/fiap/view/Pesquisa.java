@@ -1,5 +1,8 @@
 package br.com.fiap.view;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,8 +17,10 @@ import br.com.fiap.dao.impl.PacoteDAOImpl;
 import br.com.fiap.dao.impl.TransporteDAOImpl;
 import br.com.fiap.entity.Cidade;
 import br.com.fiap.entity.Cliente;
+import br.com.fiap.entity.Pacote;
 import br.com.fiap.entity.Transporte;
 import br.com.fiap.singleton.EntityManagerFactorySingleton;
+import br.com.fiap.util.DataUtil;
 
 public class Pesquisa {
 	
@@ -79,6 +84,51 @@ public class Pesquisa {
 		System.out.println("Buscar clientes por dias de reserva:");
 		clienteDao.buscarPorDiasReserva(10).forEach(c -> 
 			System.out.println(c.getNome()));
+		
+		//Listar clientes com paginação
+		clientes = clienteDao.listar(10, 10);
+		System.out.println("Listar clientes com paginação");
+		clientes.forEach(c -> System.out.println(c.getNome()));
+		
+		//Pesquisar pacotes por preço menor, retornando uma lista de vetor de objetos
+		List<Object[]> listaObjetos = pacoteDao.buscarPorPrecoMenor(5000);
+		System.out.println("Buscar pacotes por preço menor, retornando uma lista de vetor de objetos");
+		listaObjetos.forEach(v -> System.out.println(v[0] + " " + v[1]));
+		
+		//Pesquisar pacotes por preço menor, retornando uma lista de Pacotes
+		List<Pacote> pacotes = pacoteDao.buscarPorPrecoMenor2(5000); 
+		System.out.println("Buscar por pacotes com preço menor, retorndo uma lista de pacotes");
+		pacotes.forEach(p ->System.out.println(p.getDescricao() + " " + p.getQtdDias() + " " + p.getDataSaida()));
+		
+		//Pesquisar pacotes por preço menor, retornando uma lista de String
+		List<String> listaString = pacoteDao.buscarPorPrecoMenor3(7000);
+		System.out.println("Buscar pacotes por preço menor, retornando somente a descrição");
+		listaString.forEach(c -> System.out.println(c));
+		
+		//Pesquisar pacotes por data de saída
+		Calendar inicio = new GregorianCalendar(2020, Calendar.JANUARY, 1);
+		Calendar fim = new GregorianCalendar(2021, Calendar.DECEMBER, 30);
+		pacotes = pacoteDao.buscarPorDatas(inicio, fim);
+		System.out.println("Buscar pacotes por data de saída");
+		pacotes.forEach(p -> System.out.println(p.getDescricao() + " " + DataUtil.formatar(p.getDataSaida())));
+		
+		//Pesquisar cliente por parte do nome e parte do nome da cidade
+		clientes = clienteDao.buscar("a", "Salva");
+		System.out.println("Buscar clientes por parte do nome e parte do nome da cidade");
+		clientes.forEach(c -> System.out.println(c.getNome() + " " + c.getEndereco().getCidade().getNome()));
+		
+		//Pesquisar clientes por estados
+		List<String> estados = new ArrayList<>();
+		estados.add("BA");
+		estados.add("PR");
+		clientes = clienteDao.buscarPorEstados(estados);
+		System.out.println("Buscar clientes por estados");
+		clientes.forEach(c -> System.out.println(c.getNome() + " " + c.getEndereco().getCidade().getUf()));
+		
+		//Buscar cliente por nome sem case sensitive
+		clientes = clienteDao.buscarPorNome2("MARIA");
+		System.out.println("Buscar clientes por nome sem case sensitive");
+		clientes.forEach(c -> System.out.println(c.getNome()));
 		
 		//Fechar
 		em.close();
