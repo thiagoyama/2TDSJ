@@ -51,4 +51,20 @@ public class PacoteDAOImpl extends GenericDAOImpl<Pacote,Integer> implements Pac
 				.getResultList();
 	}
 
+	@Override
+	public double somarPorTransporte(Transporte transporte) {
+		return em.createQuery("select sum(p.preco) from Pacote p where p.transporte = :p", Double.class)
+				.setParameter("p", transporte)
+				.getSingleResult();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Pacote> buscarPorQtdDiasMaiorEPrecoMenor(int qtd, float preco) {
+		return em.createNativeQuery("SELECT * FROM TB_EAD_PACOTE WHERE QT_DIAS > :qtd AND VL_PACOTE < :price", Pacote.class)
+				.setParameter("qtd", qtd)
+				.setParameter("price", preco)
+				.getResultList();
+	}
+
 }

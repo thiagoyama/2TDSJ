@@ -10,14 +10,17 @@ import javax.persistence.EntityManager;
 import br.com.fiap.dao.CidadeDAO;
 import br.com.fiap.dao.ClienteDAO;
 import br.com.fiap.dao.PacoteDAO;
+import br.com.fiap.dao.ReservaDAO;
 import br.com.fiap.dao.TransporteDAO;
 import br.com.fiap.dao.impl.CidadeDAOImpl;
 import br.com.fiap.dao.impl.ClienteDAOImpl;
 import br.com.fiap.dao.impl.PacoteDAOImpl;
+import br.com.fiap.dao.impl.ReservaDAOImpl;
 import br.com.fiap.dao.impl.TransporteDAOImpl;
 import br.com.fiap.entity.Cidade;
 import br.com.fiap.entity.Cliente;
 import br.com.fiap.entity.Pacote;
+import br.com.fiap.entity.Reserva;
 import br.com.fiap.entity.Transporte;
 import br.com.fiap.singleton.EntityManagerFactorySingleton;
 import br.com.fiap.util.DataUtil;
@@ -129,6 +132,34 @@ public class Pesquisa {
 		clientes = clienteDao.buscarPorNome2("MARIA");
 		System.out.println("Buscar clientes por nome sem case sensitive");
 		clientes.forEach(c -> System.out.println(c.getNome()));
+		
+		//Contar clientes por estado
+		long qtd = clienteDao.contarPorEstado("SP");
+		System.out.println("Contar os clientes por estado: " + qtd);
+		
+		//Somar os preços dos pacotes por um transporte 
+		transporte = transporteDao.pesquisar(2);
+		double soma = pacoteDao.somarPorTransporte(transporte);
+		System.out.println("Soma dos preços dos pacotes: " + soma);
+		
+		//Instanciar uma ReservaDao
+		ReservaDAO reservaDao = new ReservaDAOImpl(em);
+		//Pesquisar reserva por parte do nome do cliente
+		List<Reserva> reservas = reservaDao.buscarPorNomeCliente("o");
+		System.out.println("Buscar reservas por parte do nome do cliente");
+		//Exibir a data da reserva e o nome do cliente
+		reservas.forEach(r -> System.out.println(r.getCliente().getNome() + " " 
+		                                                   + DataUtil.formatar(r.getDataReserva())));
+		
+		//Pesquisar reserva por parte da descrição do pacote
+		reservas = reservaDao.buscarPorDescricaoPacote("Porto");
+		System.out.println("Buscar reservas por parte da descrição do pacote");
+		reservas.forEach(r -> System.out.println(r.getPacote().getDescricao() + " " + r.getCliente().getNome()));
+		
+		//Pesquisar pacote por qtd de dias e preço
+		pacotes = pacoteDao.buscarPorQtdDiasMaiorEPrecoMenor(5, 2100);
+		System.out.println("Buscar pacotes por qtd de dias maior e preço menor");
+		pacotes.forEach(p -> System.out.println(p.getDescricao() + " Qtd: " + p.getQtdDias() + " Preço:" + p.getPreco()));
 		
 		//Fechar
 		em.close();
